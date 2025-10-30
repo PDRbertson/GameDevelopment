@@ -15,7 +15,7 @@ public class Player
 {
     public string? Name { get; set; }
     public Card[]? HandStack { get; set; }
-    public PlayerArea? TheArea { get; set; }
+    public PlayerArea? TheirArea { get; set; }
 }
 public class PlayerArea
 {
