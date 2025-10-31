@@ -3,17 +3,11 @@ using System.Runtime.CompilerServices;
 using System.Security;
 
 Console.WriteLine("Hello, World!");
-Player playerA = new()
+Player playerA = new("Peter");
+Player playerB = new("Tim");
+public class Player(string name)
 {
-    Name = "Peter"
-};
-Player playerB = new()
-{
-    Name = "Tim"
-};
-public class Player
-{
-    public string? Name { get; set; }
+    public string Name { get; set; } = name;
     public Card[]? HandStack { get; set; }
     public PlayerArea? TheirArea { get; set; }
 }
@@ -25,12 +19,7 @@ public class PlayerArea
     public Card[]? SpecialStack { get; set; }
 }
 
-public class Card
+public class Card(string name)
 {
-    public string Name { get; set; }
-    Card(string name)
-    {
-        Name = name;
-    }
-    
+    public string Name { get; set; } = name;
 }
