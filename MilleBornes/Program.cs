@@ -1,10 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 //using System.Runtime.CompilerServices;
 //using System.Security;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 
-Console.WriteLine("Hello, World!");
-Player playerA = new("Peter");
-Player playerB = new("Tim");
 Card[] deck =
 {
     new Card("Accident"),
@@ -114,7 +114,17 @@ Card[] deck =
     new Card("Distance 200"),
 
 };
-
+Console.WriteLine("Hello, World!");
+Player playerA = new("Peter");
+Player playerB = new("Tim");
+int[]? shuffledDeck;
+shuffledDeck = [.. Enumerable.Range(0, deck.Length)];
+Console.WriteLine($"{shuffledDeck.Length} First {shuffledDeck[0]} Last {shuffledDeck[shuffledDeck.Length - 1]}");
+var rng = new Random();
+rng.Shuffle(shuffledDeck);
+Console.WriteLine($"{shuffledDeck.Length} First {shuffledDeck[0]} Last {shuffledDeck[shuffledDeck.Length - 1]}");
+rng.Shuffle(shuffledDeck);
+Console.WriteLine($"{shuffledDeck.Length} First {shuffledDeck[0]} Last {shuffledDeck[shuffledDeck.Length - 1]}");
 public class Player(string name)
 {
     public string Name { get; set; } = name;
@@ -132,4 +142,21 @@ public class PlayerArea
 public class Card(string name)
 {
     public string Name { get; set; } = name;
+}
+
+
+
+static class RandomExtensions
+{
+    public static void Shuffle<T> (this Random rng, T[] array)
+    {
+        int n = array.Length;
+        while (n > 1) 
+        {
+            int k = rng.Next(n--);
+            T temp = array[n];
+            array[n] = array[k];
+            array[k] = temp;
+        }
+    }
 }
