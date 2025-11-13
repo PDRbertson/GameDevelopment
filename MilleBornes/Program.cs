@@ -117,26 +117,49 @@ Card[] deck =
 Console.WriteLine("Hello, World!");
 Player playerA = new("Peter");
 Player playerB = new("Tim");
+Player[] players=[playerA,playerB]; 
 int[]? shuffledDeck;
+int topCard = deck.Length-1;
+
 shuffledDeck = [.. Enumerable.Range(0, deck.Length)];
 Console.WriteLine($"{shuffledDeck.Length} First {shuffledDeck[0]} Last {shuffledDeck[shuffledDeck.Length - 1]}");
 var rng = new Random();
 rng.Shuffle(shuffledDeck);
-Console.WriteLine($"{shuffledDeck.Length} First {shuffledDeck[0]} Last {shuffledDeck[shuffledDeck.Length - 1]}");
-rng.Shuffle(shuffledDeck);
-Console.WriteLine($"{shuffledDeck.Length} First {shuffledDeck[0]} Last {shuffledDeck[shuffledDeck.Length - 1]}");
+//dealing
+for (int i = 0; i < 6; i++)
+{
+    foreach (Player p in players)
+    {
+        p.DrawCard(shuffledDeck[topCard--]);
+    }
+}
+foreach (Player p in players)
+{
+    Console.WriteLine($"Player: {p.Name}");
+    foreach (int index in p.Hand)
+    {
+        Console.WriteLine($"{index} - {deck[index].Name}");
+    }
+}
+
+
 public class Player(string name)
 {
     public string Name { get; set; } = name;
-    public Card[]? HandStack { get; set; }
-    public PlayerArea? TheirArea { get; set; }
+    public List<int> Hand { get; set; } = [];
+    public PlayerTableau TheirTableau { get; set; } = new();
+
+    public void DrawCard(int deckIndex)
+    {
+        this.Hand.Add(deckIndex);
+    }
 }
-public class PlayerArea
+public class PlayerTableau
 {
-    public Card[]? LightStack { get; set; }
-    public Card[]? LimitStack { get; set; }
-    public Card[]? DistanceStack { get; set; }
-    public Card[]? SpecialStack { get; set; }
+    public List<int> LightArea { get; set; } = [];
+    public List<int> LimitArea { get; set; } = [];
+    public List<int> DistanceArea { get; set; } = [];
+    public List<int> SpecialArea { get; set; } = [];
 }
 
 public class Card(string name)
